@@ -1,0 +1,40 @@
+#command{
+    color: lightseagreen;
+    text-align: center;
+}
+section{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+form{
+    width: 100%;
+    text-align: center;
+}
+#user{
+    width: 30%;
+    margin-right: 1vw;
+}
+#not{
+    color: red;
+    font-size: 2em;
+}
+#searched{
+    width: 100%;
+    text-align: center;
+    margin-top: 3vh;
+    justify-content: center;
+    align-items: center;
+}
+#repos{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#repos_title{
+    color: lightseagreen;
+}
+#repos_list{
+    width: 50%;
+}

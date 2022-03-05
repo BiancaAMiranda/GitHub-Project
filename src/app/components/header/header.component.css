@@ -1,0 +1,24 @@
+header{
+    display: flex;
+    background-color: lightseagreen;
+    height: 20vh;
+    width: 100%;
+    align-items: center;
+}
+
+#github-logo{
+    position: relative;
+    left: 1vw;
+    height: 10vh;
+    margin-left: 2vw;
+}
+
+h1{
+    font-size: 3em;
+    position: relative;
+    right: 0;
+    left: 0;
+    margin: auto;
+    align-self: center;
+    justify-self: center;
+}
