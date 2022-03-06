@@ -2,13 +2,19 @@
     <p id="command">Search for an user and see their profile informations!</p>
     <form (ngSubmit)="onSubmit()" id="form" >
         <input placeholder="Type an user" name="user" id="user" type="text" [(ngModel)]="user.user">
+        <select (click)="changeSelect()" name="select" id="select">
+                <option value="0">Name Ascending</option>
+                <option value="1">Name Descending</option>
+                <option value="2">Stars Ascending</option>
+                <option value="3">Stars Descending</option>
+        </select>
         <button id="search">Search</button>
     </form>
     <div id="searched"></div>
     <div id="repos">
         <div id="repos_title">
-                <h3 style="text-align: center"></h3>
-            </div>
+                    <h3 style="text-align: center"></h3>
+        </div>
         <div id="repos_list"></div>
     </div>
 </section>

@@ -8,7 +8,13 @@ import { User } from '../users/users';
 })
 export class SearchComponent implements OnInit {
   user!: User;
-  constructor() {}
+  sorted = '0';
+  constructor() {};
+
+  changeSelect(){
+    let sort = (<HTMLSelectElement>document.getElementById('select')).value;
+    this.sorted = sort;
+  }
 
   ngOnInit() {
     this.user = new User();
@@ -44,8 +50,23 @@ export class SearchComponent implements OnInit {
             document.getElementById('repos_title')!.innerHTML = `
             <h3 style="text-align: center">${data.login}'s Repositories</h3>`;
 
+            if(this.sorted == '0'){
+              repos_data.sort((a: { name: number; }, b: { name: number; }) => (a.name < b.name ? -1 : 1));
+
+            } else if(this.sorted == '1'){
+              repos_data.sort((a: { name: number; }, b: { name: number; }) => (a.name > b.name ? -1 : 1));
+            } else if(this.sorted == '2'){
+              repos_data.sort(function(a: { stargazers_count: number; }, b: { stargazers_count: number; }) {
+                return a.stargazers_count - b.stargazers_count;
+              });
+            } else if (this.sorted == '3'){
+              repos_data.sort(function(a: { stargazers_count: number; }, b: { stargazers_count: number; }) {
+                return - a.stargazers_count + b.stargazers_count;
+              });
+            }
+
             let structures:string[] = [];
-            console.log(structures);
+
             for (let i:number = 0; i < data.public_repos; i++){
               structures.push(`
               <section>
