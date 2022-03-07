@@ -28,15 +28,17 @@ export class SearchComponent implements OnInit {
         document.getElementById('repos_list')!.innerHTML = ``;
       } else{
         document.getElementById('searched')!.innerHTML = `
-        <div style="width: 40%; display: flex; justify-content: space-between; align-items: center; position: relative; right: 0; left: 0; margin: auto; " >
-          <img style="height: 25vh; border-radius: 50%" src='${data.avatar_url}'>
-          <div style="text-align: left; font-size: 0.9em">
-            <p> name: ${data.name} </p>
-            <p>login: ${data.login} </p>
-            <p>description: ${data.bio} </p>
-            <p>followers: ${data.followers} </p>
-            <p>following: ${data.following} </p>
-            <p>location: ${data.location} </p>
+        <div style="width: 50%; display: flex; justify-content: space-between; align-items: center; position: relative; right: 0; left: 0; margin-left: auto; margin-right:auto; margin-bottom: 3vh">
+          <div style="width: 50%; display: flex; align-items: center; justify-content: center">
+            <img style="height: 20vh; border-radius: 50%" src='${data.avatar_url}'>
+          </div>
+          <div style="width: 50%; display: flex; flex-direction: column; text-align: left; font-size: 0.9em; align-items: center; justify-content: center">
+            <p> name: ${data.name} <br>
+            login: ${data.login} <br>
+            description: ${data.bio} <br>
+            followers: ${data.followers} <br>
+            following: ${data.following} <br>
+            location: ${data.location} </p>
           </div>
         </div>
         <div align="center">
@@ -44,9 +46,11 @@ export class SearchComponent implements OnInit {
           <img height="180em" src="https://github-readme-stats.vercel.app/api?username=${data.login}&show_icons=true&theme=default&include_all_commits=true&count_private=true"/>
           <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=${data.login}&layout=compact&langs_count=7&theme=default"/>
         </div>`;
+        console.log(data.public_repos);
         if (data.public_repos > 0){
           fetch(`https://api.github.com/users/${data.login}/repos`).then((repos)=> repos.json()).then((repos_data) => {
 
+            console.log(repos_data);
             document.getElementById('repos_title')!.innerHTML = `
             <h3 style="text-align: center">${data.login}'s Repositories</h3>`;
 
@@ -65,7 +69,8 @@ export class SearchComponent implements OnInit {
               });
             }
 
-            let structures:string[] = [];
+            if (data.public_repos <=30){
+              let structures:string[] = [];
 
             for (let i:number = 0; i < data.public_repos; i++){
               structures.push(`
@@ -87,7 +92,38 @@ export class SearchComponent implements OnInit {
               )
             };
             document.getElementById('repos_list')!.innerHTML = `${structures.join(" <br>")}`;
-          })
+            }
+            else if (data.public_repos > 30){
+              let structures:string[] = [];
+
+              for (let i:number = 0; i < 30; i++){
+                structures.push(`
+                <section>
+                  <div>
+                    <a target="_blanket" style="color: lightseagreen;" href="${repos_data[i].html_url}">
+                      <h3>${repos_data[i].name}</h3>
+                    </a>
+                  </div>
+                  <div>
+                    <p>${repos_data[i].description}</p>
+                  </div>
+                  <div style="display: flex; align-items: center; justify-content: space-between">
+                    <p>${repos_data[i].language}</p>
+                    <p>☆ ${repos_data[i].stargazers_count}</p>
+                    <p>Update on ${repos_data[i].updated_at}</p>
+                  </div>
+                </section>`,
+                )
+              };
+              document.getElementById('repos_list')!.innerHTML = `${structures.join(" <br>")}
+              <a target="_blank" style="color: lightseagreen; margin-top: 2vh" href="https://github.com/${data.login}?tab=repositories"><p style="text-align: center;">More...</p></a>`;
+            }
+          }) 
+        } 
+        else{
+          document.getElementById('repos_title')!.innerHTML = `
+          <h3 style="text-align: center">O usuário ${data.login} does not have repositories!</h3>`;
+          document.getElementById('repos_list')!.innerHTML = ``;
         }
       }
     }).catch(function(error) {
