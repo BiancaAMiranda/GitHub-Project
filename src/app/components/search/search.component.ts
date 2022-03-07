@@ -122,7 +122,7 @@ export class SearchComponent implements OnInit {
         } 
         else{
           document.getElementById('repos_title')!.innerHTML = `
-          <h3 style="text-align: center">O usuário ${data.login} does not have repositories!</h3>`;
+          <h3 style="text-align: center">The user ${data.login} does not have repositories!</h3>`;
           document.getElementById('repos_list')!.innerHTML = ``;
         }
       }
